@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block title%}
+
+我的网站|首页
+{% endblock%}
+{% block content %}
+    <br>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>欢迎访问我的博客！</h1>
+        <p>自学python，使用bootstrap,django学习搭建个人博客...</p>
+        <p>目前首页，博客列表，博客分类，日期分类等跳转以实现，文章分页及分类后数量正常显示</p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="{% url 'blog_list' %}" role="button">访问博客 &raquo;</a>
+        </p>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ type.type_name }}
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class=" jumbotron">
+            <div class="row">
+                <div class="col-lg-8 col-sm-8">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3><b>标签:{{ type.type_name }}</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for foo in contents %}
+                                <h4>标题:<a href="{% url "blog_detail" foo.pk %}">
+                                    {{ foo.title }}
+                                </a></h4>
+                                <div class="info">
+                                    分类: <a href="{% url 'blog_type'  foo.tag.pk %}">{{ foo.tag }}</a>
+                                    &nbsp;
+                                    发表时间:{{ foo.create_time|date:" Y-m-d" }}
+                                    &nbsp;
+                                    阅读量:({{foo.get_read_num}})
+                                </div>
+                                <hr>
+                                {% empty %}
+                                 <h4>暂无博客，敬请期待！</h4>
+
+                            {% endfor %}
+                            <div class="text-center">
+                                一共有{{ contents.paginator.count }}篇博文
+                            </div>
+                        </div>
+
+
+                    <div class=" panel-footer text-center">
+                        <ul class="pagination" >
+                            <li>
+                                {%  if contents.has_previous %}
+                                    <a href="?page={{ contents.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                {% else %}
+                                    <span aria-hidden="true">&laquo;</span>
+                                {% endif %}
+                            </li>
+
+                            <li>
+                                {% for page_num in contents.paginator.page_range %}
+                                    {% if page_num == contents.number %}
+                                        <li class="active">
+                                        <span>{{ page_num }}</span>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                        <a href="?page={{ page_num }}">{{ page_num }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li>
+                                {% if contents.has_next %}
+                                    <a href="?page={{ contents.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                {% else %}
+                                    <span aria-hidden="true">&raquo;</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3><b>日期分类</b></h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                {% for i in types %}
+                                    <li class="list-group-item">
+                                        <a href="{% url 'blog_type' i.pk %}">
+                                            {{ i.type_name }}({{ i.blog_count }})
+                                        </a>
+                                    </li>
+
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    </div>
+{% endblock %}

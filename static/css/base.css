@@ -1,0 +1,15 @@
+.nav-header {
+    min-height: 50px;
+    background: #393D49;
+}
+
+.nav {
+    font-weight: bold;
+}
+
+nav a:visited {
+    color: #009688;
+}
+ul{
+    list-style-position: inside;
+}
